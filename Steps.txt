@@ -1,0 +1,226 @@
+Set fly target – login into pcf
+
+fly -t manulife_ci login
+
+fly --target manulife_ci login --concourse-url https://concourse.platform.manulife.io/
+
+fly --target manulife_ci login --concourse-url https://concourse.platform.manulife.io/  -n SOA-MIGRATION
+
+
+Username: admin
+Password: G$dc0ncourse
+
+
+https://concourse.platform.manulife.io/teams/SOA-MIGRATION/pipelines/
+
+
+fly -t manulife_ci unpause-pipeline -p <pipeline_name> 
+
+
+fly -t manulife_ci trigger-job /j <pipeline_name>/prepare-cf-dev
+
+fly -t manulife_ci builds | less
+
+
+
+To run the shortcut for pipeline delete/creation and unpause
+ . ./1 
+
+
+
+
+fly -t  manulife_ci dp -p JHFNMaintainPartyContact
+fly -t  manulife_ci sp -p DocuSignEnvelope -c pipeline.yml -l credentials.yml
+fly -t  manulife_ci up -p DocuSignEnvelope 
+
+https://concourse.platform.manulife.io/teams/SOA-MIGRATION/pipelines/Producer2
+
+
+***************************************************
+
+ 1  git clone https://git.platform.manulife.io/gnanant/InvestmentRepresentative.git
+    2  pwd
+    3  pwd
+    4  cd ..
+    5  cd ..
+    6  cd workspace/
+    7  cd IRSGetRepDetails_New/
+    8  git clone https://git.platform.manulife.io/gnanant/InvestmentRepresentative.git
+    9  cd InvestmentRepresentative
+   10  touch README.md
+   11  git add README.md
+   12  git commit -m "add README"
+   13  git push -u origin master
+   14  pwd
+   15  git add
+   16  git add C:\workspace\JHMicroservices\IRSGetRepDetails
+   17  git add C:\workspace\IRSGetRepDetails_New\InvestmentRepresentative
+   18  git add **
+   19  cd C:/workspace
+   20  ll
+   21  cd JHFNMaintainPartyContact_Delete
+   22  cls
+   23  clear
+   24  git status
+   25  cls
+   26  alias cls=clear
+   27  cls
+   28  l
+   29  alias l="ls -lpF"
+   30  cls
+   31  l
+   32  cd ci
+   33  cls
+   34  which fly
+   35  cls
+   36  echo $PATH
+   37  cd C:/Users/gnanant/bin
+   38  exit
+   39  fly -t  manulife_ci dp -p JHFNMaintainPartyContact
+   40  fly -t  manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   41  cd C:\workspace
+   42  cd JHFNMaintainPartyContact_Delete/
+   43  cls
+   44  fly -t  manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   45  cd ci
+   46  fly -t  manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   47  fly -t  manulife_ci up -p JHFNMaintainPartyContact
+   48  fly -t manulife_ci builds
+   49  fly -t manulife_ci builds | less
+   50  l
+   51  alias cls=clear; alias l="ls -lpF";
+   52  set -o vi
+   53  cls
+   54  l
+   55  cls
+   56  cd C:/workspace
+   57  cd JHFNMaintainPartyContact_Delete
+   58  l
+   59  cls
+   60  which fly
+   61  fly targets
+   62  fly -t manulife_ci
+   63  pwd
+   64  ll
+   65  cd ci
+   66  cls
+   67  fly -t manulife_ci sp --help
+   68  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   69  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   70  cls
+   71  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   72  fly --version
+   73  fly sync
+   74  fly -t manulife_ci sync
+   75  cls
+   76  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   77  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   78  cls
+   79  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   80   fly -t manulife_ci login
+   81  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   82   fly -t manulife_ci pipelines
+   83   fly -t manulife_ci gp -p JHFNMaintainPartyContact | less
+   84   fly -t manulife_ci up -p JHFNMaintainPartyContact
+   85   fly -t manulife_ci builds
+   86  cls
+   87   fly -t manulife_ci builds | head
+   88   fly -t manulife_ci builds | grep -i JHFNMaintainPartyContac
+   89   fly -t manulife_ci builds | grep -i JHFNMaintainPartyContact
+   90   fly -t manulife_ci builds | less
+   91  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   92  fly -t manulife_ci dp -p JHFNMaintainPartyContact
+   93  cls
+   94  fly -t manulife_ci sp -p JHFNMaintainPartyContact -c pipeline.yml -l credentials.yml
+   95   fly -t manulife_ci up -p JHFNMaintainPartyContact
+   96  cat > 1
+   97  vi 1
+   98  . ./1
+   99  cls
+  100   fly -t manulife_ci builds | less
+  101   fly -t manulife_ci intercept
+  102   fly -t manulife_ci intercept --help
+  103   fly -t manulife_ci intercept -b 824860
+  104  cd ..
+  105  cls
+  106  l
+  107   fly -t manulife_ci builds | less
+  108  cd C:\workspace\JHFNMaintainPartyContact_Delete\ci
+  109  cd C:
+  110  cd workspace/JFHMaintainPartyContact_Delete
+  111  cd
+  112  cd JHFNMaintainPartyContact_Delete;
+  113  cd JHFNMaintainPartyContact_Delete
+  114  pwd
+  115  cd C:/workspace/J*Delete
+  116  cd ci
+  117  cls
+  118  ar
+  119  clear
+  120  set -o vi
+  121  alias cls=clear; alias l="ls -lpF";
+  122  l
+  123  l
+  124  cd tasks/
+  125  l
+  126  l build-service/
+  127  l
+  128  cd build-service/
+  129  l
+  130  cd ../../
+  131  cls
+  132  l
+  133  . ./1
+  134   fly -t manulife_ci builds | less
+  135  cls
+  136   fly -t manulife_ci builds | less
+  137   fly -t manulife_ci intercept -b 826526
+  138  exit
+  139  set -o vi;
+  140  history
+  141   cd C:/workspace/J*Delete
+  142  cls
+  143  alias cls=clear; alias l="ls -lpF";
+  144  cls
+  145  l
+  146  cd ci
+  147  cls
+  148  pwd
+  149  git status
+  150  git commit tasks/build-service/task.yml -m "corrected the directory name"
+  151  git push
+  152  git status
+  153  cls
+  154  l
+  155   fly -t manulife_ci builds | less
+  156  cls
+  157  . ./1
+  158  cls
+  159   fly -t manulife_ci builds | less
+  160  git status
+  161  cls
+  162   fly -t manulife_ci intercept -b 826556
+  163   fly -t manulife_ci intercept -b 826556
+  164  cls
+  165   fly -t manulife_ci intercept -b 826556
+  166   fly -t manulife_ci containers
+  167   fly -t manulife_ci containers | wc -l
+  168   fly -t manulife_ci intercept -b 826556
+  169   fly -t manulife_ci intercept -b 826556
+  170   fly -t manulife_ci intercept -b 826556
+  171  ls -l
+  172  cd tasks/
+  173  cls
+  174  ls -l
+  175  cd build-service/
+  176  ls -l
+  177  find . -name '*.sh' | xargs git update-index --chmod=+x
+  178  ls -l
+  179  git commit -m "updated exec permission on task"
+  180  git status
+  181  git status
+  182  cd ../../../src/main/java
+  183  git status
+  184  cd -
+  185  git push
+  186  history
