@@ -1,0 +1,29 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: 9.11.1-alpine
+
+inputs:
+  - name: service-repo
+
+run:
+  path: sh
+  args: [ "./service-repo/ci/tasks/test-echo/task.sh" ]
+
+#run:
+#  path: ls
+#  args: [ "-alR" ]
+
+#run:
+#  path: sh
+#  args:
+#  - -c
+#  - |
+#    set -eu
+#
+#    pwd
+#    ls -l
