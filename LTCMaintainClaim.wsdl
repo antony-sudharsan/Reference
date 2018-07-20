@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:ns1="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" xmlns:tns="http://www.esb.manulife.com/wsdl/LTC/jh/LTCMaintainClaim/LTCMaintainClaim" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.esb.manulife.com/xsd/LTC/jh/LTCMaintainClaim" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="LTCMaintainClaim" targetNamespace="http://www.esb.manulife.com/wsdl/LTC/jh/LTCMaintainClaim/LTCMaintainClaim">
+    <wsdl:types>
+        <xs:schema xmlns:hdr="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.esb.manulife.com/xsd/common/jh/header" version="1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="JHHeader">
+                <xs:annotation>
+                    <xs:documentation>message request header</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element ref="hdr:Version">
+                        <xs:annotation>
+                            <xs:documentation>Used to indicate the XML document 
+                                                                      Version
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ConversationUID">
+                        <xs:annotation>
+                            <xs:documentation>This must be unique ID across a chain of messages and should be carried by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:MessageUID">
+                        <xs:annotation>
+                            <xs:documentation>This must be unique for each request and should be created by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+Channel/Requestor supplies its own UID and ESB /service provider sets it in the response SOAP header.                           </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:RelatesTo">
+                        <xs:annotation>
+                            <xs:documentation>This element specifies the MessageUID to which it is related. In a chain of requests, this specifies the messageUID of previous requestor.
+It should be set to �NA� by the request initiator in the message chain. Together with MessageUID, it constitutes a unique combination across the chain of messages.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:MessageType">
+                        <xs:annotation>
+                            <xs:documentation>This element is required to distinguish a record in the logs from a request or response type assuming for a request-reply pattern we log both incoming request and outgoing response message.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:OriginalMessageDateTime">
+                        <xs:annotation>
+                            <xs:documentation> This date time is set by the request initiator and carried AS_IS by each message in the chain. format, 
+yyyy-MM-dd'T'HH:mm:ss.SSS.T 
+                          </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:CurrentMessageDateTime">
+                        <xs:annotation>
+                            <xs:documentation> Time according to the client, In cases where there is 
+                                                                        an external client.           
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:MessageSource">
+                        <xs:annotation>
+                            <xs:documentation>Describes the Source of a message.
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ServiceInfo">
+                        <xs:annotation>
+                            <xs:documentation>Describes the Service that is requested. This    
+                   element is set by the first server on the request processing path. It is optional for     
+                   client  issuing the original request.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:Status" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Describes the status of a request. 
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:EnvironmentID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>This is useful for both a localized and shared service with multiple dev and QA environment dependencies. The ID would help to select the appropriate environment dependent resources to be used in the service.
+Format : BU_Env.Name
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:RequestTimeOut" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Specifies a time-out period in seconds that the service consumer will wait for a response to the request.  After this time any response should be discarded.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MessageSource">
+                <xs:sequence>
+                    <xs:element ref="hdr:ApplicationName">
+                        <xs:annotation>
+                            <xs:documentation>Name of the application that initiated the message.    
+                                        Should be setup as the registered application name in common registry.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:HostName">
+                        <xs:annotation>
+                            <xs:documentation>Host name. This can mean a machine ID for the 
+                                        client, host name of the application server for the backend or request 
+                                         processing system.    
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ApplicationUserID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Filled in with a unique userid when the userid is of 
+                                                                      type SHARED
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:UserID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Filled with the users AD userid. It may be of type 
+                                                                     shared.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ProcessID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Process ID that initiated the request or response. 
+                           Useful in case of a Mainframe transaction or Batch process initiating the request.
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ServiceInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:ServiceName">
+                        <xs:annotation>
+                            <xs:documentation>Used to identify the service that is being 
+                                                                       requested.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ServiceVersion">
+                        <xs:annotation>
+                            <xs:documentation>Used to identify the version of the service being 
+                                                                       invoked.
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ServiceOperation">
+                        <xs:annotation>
+                            <xs:documentation>Service Function.  Describes the type of service 
+                                                                       requested like Policy Inquiry.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Status">
+                <xs:sequence>
+                    <xs:element ref="hdr:StatusCode">
+                        <xs:annotation>
+                            <xs:documentation>Indicates the status of the  request.  
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:StatusDescription">
+                        <xs:annotation>
+                            <xs:documentation>This element would carry meaningful description in case of partial and error status. The complete trace and info messages should be part of SOAPFAULT or application message payload with in SOAPBody.
+                                    </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ApplicationName">
+                <xs:annotation>
+                    <xs:documentation>Name of the application that initiated the message.    
+                                        Should be setup as the registered application name in common registry.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ApplicationUserID">
+                <xs:annotation>
+                    <xs:documentation>Filled in with a unique userid when the userid is of 
+                                                                      type SHARED
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ConversationUID">
+                <xs:annotation>
+                    <xs:documentation>This must be unique ID across a chain of messages and should be carried by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="CurrentMessageDateTime" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation> Time according to the client, In cases where there is 
+                                                                        an external client.           
+                                      </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnvironmentID" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>This is useful for both a localized and shared service with multiple dev and QA environment dependencies. The ID would help to select the appropriate environment dependent resources to be used in the service.
+Format : BU_Env.Name
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="12"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="HostName">
+                <xs:annotation>
+                    <xs:documentation>Host name. This can mean a machine ID for the 
+                                        client, host name of the application server for the backend or request 
+                                         processing system.    
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="50"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="JHHeader" type="hdr:JHHeader"/>
+            <xs:element name="MessageSource" type="hdr:MessageSource">
+                <xs:annotation>
+                    <xs:documentation>Describes the Source of a message.
+                                       </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageType">
+                <xs:annotation>
+                    <xs:documentation>This element is required to distinguish a record in the logs from a request or response type assuming for a request-reply pattern we log both incoming request and outgoing response message.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="8"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="MessageUID">
+                <xs:annotation>
+                    <xs:documentation>This must be unique for each request and should be created by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+Channel/Requestor supplies its own UID and ESB /service provider sets it in the response SOAP header.                           </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="OriginalMessageDateTime" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation> This date time is set by the request initiator and carried AS_IS by each message in the chain. format, 
+yyyy-MM-dd'T'HH:mm:ss.SSS.T 
+                          </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProcessID">
+                <xs:annotation>
+                    <xs:documentation>Process ID that initiated the request or response. 
+                           Useful in case of a Mainframe transaction or Batch process initiating the request.
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="6"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="RelatesTo">
+                <xs:annotation>
+                    <xs:documentation>This element specifies the MessageUID to which it is related. In a chain of requests, this specifies the messageUID of previous requestor.
+It should be set to �NA� by the request initiator in the message chain. Together with MessageUID, it constitutes a unique combination across the chain of messages.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="RequestTimeOut" type="xs:decimal">
+                <xs:annotation>
+                    <xs:documentation>Specifies a time-out period in seconds that the service consumer will wait for a response to the request.  After this time any response should be discarded.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ServiceInfo" type="hdr:ServiceInfo">
+                <xs:annotation>
+                    <xs:documentation>Describes the Service that is requested. This    
+                   element is set by the first server on the request processing path. It is optional for     
+                   client  issuing the original request.
+                                      </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ServiceName">
+                <xs:annotation>
+                    <xs:documentation>Used to identify the service that is being 
+                                                                       requested.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ServiceOperation">
+                <xs:annotation>
+                    <xs:documentation>Service Function.  Describes the type of service 
+                                                                       requested like Policy Inquiry.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ServiceVersion">
+                <xs:annotation>
+                    <xs:documentation>Used to identify the version of the service being 
+                                                                       invoked.
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Status" type="hdr:Status">
+                <xs:annotation>
+                    <xs:documentation>Describes the status of a request. 
+                                       </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="StatusCode">
+                <xs:annotation>
+                    <xs:documentation>Indicates the status of the  request.  
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:enumeration value="0"/>
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="StatusDescription">
+                <xs:annotation>
+                    <xs:documentation>This element would carry meaningful description in case of partial and error status. The complete trace and info messages should be part of SOAPFAULT or application message payload with in SOAPBody.
+                                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="160"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="UserID">
+                <xs:annotation>
+                    <xs:documentation>Filled with the users AD userid. It may be of type 
+                                                                     shared.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="200"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Version">
+                <xs:annotation>
+                    <xs:documentation>Used to indicate the XML document 
+                                                                      Version
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:tns="http://www.esb.manulife.com/xsd/LTC/jh/LTCMaintainClaim" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msg="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" targetNamespace="http://www.esb.manulife.com/xsd/LTC/jh/LTCMaintainClaim" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:import namespace="http://www.esb.manulife.com/xsd/common/jh/CommonMessage"/>
+            <xs:complexType name="CreateClaim_RequestParms">
+                <xs:sequence>
+                    <xs:element name="LineOfBusinessCode" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>'Group' or 'Retail'</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice>
+                        <xs:element name="GroupPolicy">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="GroupLTCId" type="xs:string"/>
+                                    <xs:element name="GroupSeqNbr" type="xs:int"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="RetailPolicy">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RetailCompanyCode" type="xs:string"/>
+                                    <xs:element name="PolNumber" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element name="ClaimStatusCode" type="xs:string"/>
+                    <xs:element name="ClaimSubStatusCode" type="xs:string"/>
+                    <xs:element name="ClaimStatusEffectiveDate" type="xs:dateTime"/>
+                    <xs:element name="ClaimOriginatingSystem" type="xs:string"/>
+                    <xs:element name="CurrentlyProcessedBySystem" type="xs:string"/>
+                    <xs:element name="ClaimNumber" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateClaim_RequestParms">
+                <xs:sequence>
+                    <xs:element name="LineOfBusinessCode" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>'Group' or 'Retail'</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice>
+                        <xs:element name="GroupPolicy">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="GroupLTCId" type="xs:string"/>
+                                    <xs:element name="GroupSeqNbr" type="xs:int"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="RetailPolicy">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RetailCompanyCode" type="xs:string"/>
+                                    <xs:element name="PolNumber" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element name="ClaimStatusCode" type="xs:string"/>
+                    <xs:element name="ClaimSubStatusCode" type="xs:string"/>
+                    <xs:element name="ClaimStatusEffectiveDate" type="xs:dateTime"/>
+                    <xs:element name="NewClaimNumber" type="xs:string" minOccurs="0"/>
+                    <xs:element name="CurrentClaimNumber" type="xs:string"/>
+                    <xs:element name="ClaimOriginatingSystem" type="xs:string"/>
+                    <xs:element name="CurrentlyProcessedBySystem" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="CreateClaim_request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CreateClaim_RequestParms" type="tns:CreateClaim_RequestParms"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CreateClaim_response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CreateClaim_RequestParms" type="tns:CreateClaim_RequestParms"/>
+                        <xs:element name="StatusCode" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>
+							'0000' - successs
+							'0100' - record not found
+						</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="StatusDescription" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="LTCMaintainClaim_fault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Fault" type="msg:FaultType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateClaim_request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="UpdateClaim_RequestParms" type="tns:UpdateClaim_RequestParms"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UpdateClaim_response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="UpdateClaim_RequestParms" type="tns:UpdateClaim_RequestParms"/>
+                        <xs:element name="StatusCode" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>
+							'0000' - successs
+							'0100' - record not found
+						</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="StatusDescription" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:hdr="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msg="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" targetNamespace="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:import namespace="http://www.esb.manulife.com/xsd/common/jh/header"/>
+            <xs:annotation>
+                <xs:documentation>Common types for use in SOA messages</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType name="ErrorCodeType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="ErrorDescriptionType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:complexType name="FaultType">
+                <xs:sequence>
+                    <xs:element name="ErrorCode" type="msg:ErrorCodeType"/>
+                    <xs:element name="ErrorDescription" type="msg:ErrorDescriptionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestCommonInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:JHHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestHeader">
+                <xs:sequence>
+                    <xs:element ref="hdr:JHHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestParameter">
+                <xs:sequence>
+                    <xs:element name="ParmName" type="xs:string"/>
+                    <xs:element name="ParmValue" type="xs:string"/>
+                    <xs:element name="ParmDesc" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestParameters">
+                <xs:sequence>
+                    <xs:element name="RequestParameter" type="msg:RequestParameter"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ResponseCommonInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:JHHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ResponseHeader">
+                <xs:sequence>
+                    <xs:element ref="hdr:JHHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Fault" type="msg:FaultType"/>
+            <xs:element name="RequestHeader" type="msg:RequestHeader"/>
+            <xs:element name="ResponseHeader" type="msg:ResponseHeader"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="CreateClaim_request">
+        <wsdl:part name="CreateClaim_request" element="ns0:CreateClaim_request"/>
+    </wsdl:message>
+    <wsdl:message name="CreateClaim_response">
+        <wsdl:part name="CreateClaim_response" element="ns0:CreateClaim_response"/>
+    </wsdl:message>
+    <wsdl:message name="LTCMaintainClaim_Fault">
+        <wsdl:part name="Fault" element="ns1:Fault"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateClaim_request">
+        <wsdl:part name="UpdateClaim_request" element="ns0:UpdateClaim_request"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateClaim_response">
+        <wsdl:part name="UpdateClaim_response" element="ns0:UpdateClaim_response"/>
+    </wsdl:message>
+    <wsdl:message name="JHHeader_request">
+        <wsdl:part name="JHHeader_request" element="ns2:JHHeader"/>
+    </wsdl:message>
+    <wsdl:message name="JHHeader_response">
+        <wsdl:part name="JHHeader_response" element="ns2:JHHeader"/>
+    </wsdl:message>
+    <wsdl:portType name="LTCMaintainClaim">
+        <wsdl:operation name="CreateClaim">
+            <wsdl:input message="tns:CreateClaim_request"/>
+            <wsdl:output message="tns:CreateClaim_response"/>
+            <wsdl:fault name="Fault" message="tns:LTCMaintainClaim_Fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateClaim">
+            <wsdl:input message="tns:UpdateClaim_request"/>
+            <wsdl:output message="tns:UpdateClaim_response"/>
+            <wsdl:fault name="Fault" message="tns:LTCMaintainClaim_Fault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="LTCMaintainClaim" type="tns:LTCMaintainClaim">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreateClaim">
+            <wsdl:documentation/>
+            <soap:operation style="document" soapAction="CreateClaim"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="CreateClaim_request"/>
+                <soap:header use="literal" message="tns:JHHeader_request" part="JHHeader_request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="CreateClaim_response"/>
+                <soap:header use="literal" message="tns:JHHeader_response" part="JHHeader_response"/>
+            </wsdl:output>
+            <wsdl:fault name="Fault">
+                <soap:fault use="literal" name="Fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateClaim">
+            <wsdl:documentation/>
+            <soap:operation style="document" soapAction="UpdateClaim"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="UpdateClaim_request"/>
+                <soap:header use="literal" message="tns:JHHeader_request" part="JHHeader_request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="UpdateClaim_response"/>
+                <soap:header use="literal" message="tns:JHHeader_response" part="JHHeader_response"/>
+            </wsdl:output>
+            <wsdl:fault name="Fault">
+                <soap:fault use="literal" name="Fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="LTCMaintainClaim">
+        <wsdl:port name="LTCMaintainClaim" binding="tns:LTCMaintainClaim">
+            <soap:address location="https://0.0.0.0:7044/ESB/LTC/LTCMaintainClaim_1.0"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

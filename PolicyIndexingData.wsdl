@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" xmlns:ns1="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:tns="http://www.esb.manulife.com/wsdl/Annuity/jh/AWDIndex/PolicyIndexingData" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.esb.manulife.com/xsd/Annuity/jh/AWDIndexing" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="PolicyIndexingData" targetNamespace="http://www.esb.manulife.com/wsdl/Annuity/jh/AWDIndex/PolicyIndexingData">
+    <wsdl:types>
+        <xs:schema xmlns:hdr="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.esb.manulife.com/xsd/common/jh/header" version="1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="MessageSource">
+                <xs:sequence>
+                    <xs:element ref="hdr:ApplicationName">
+                        <xs:annotation>
+                            <xs:documentation>Name of the application that initiated the message.    
+                                        Should be setup as the registered application name in common registry.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:HostName">
+                        <xs:annotation>
+                            <xs:documentation>Host name. This can mean a machine ID for the 
+                                        client, host name of the application server for the backend or request 
+                                         processing system.    
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ApplicationUserID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Filled in with a unique userid when the userid is of 
+                                                                      type SHARED
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:UserID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Filled with the users AD userid. It may be of type 
+                                                                     shared.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ProcessID" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Process ID that initiated the request or response. 
+                           Useful in case of a Mainframe transaction or Batch process initiating the request.
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ServiceInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:ServiceName">
+                        <xs:annotation>
+                            <xs:documentation>Used to identify the service that is being 
+                                                                       requested.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ServiceVersion">
+                        <xs:annotation>
+                            <xs:documentation>Used to identify the version of the service being 
+                                                                       invoked.
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:ServiceOperation">
+                        <xs:annotation>
+                            <xs:documentation>Service Function.  Describes the type of service 
+                                                                       requested like Policy Inquiry.
+                                      </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Status">
+                <xs:sequence>
+                    <xs:element ref="hdr:StatusCode">
+                        <xs:annotation>
+                            <xs:documentation>Indicates the status of the  request.  
+                                       </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="hdr:StatusDescription">
+                        <xs:annotation>
+                            <xs:documentation>This element would carry meaningful description in case of partial and error status. The complete trace and info messages should be part of SOAPFAULT or application message payload with in SOAPBody.
+                                    </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ApplicationName">
+                <xs:annotation>
+                    <xs:documentation>Name of the application that initiated the message.    
+                                        Should be setup as the registered application name in common registry.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ApplicationUserID">
+                <xs:annotation>
+                    <xs:documentation>Filled in with a unique userid when the userid is of 
+                                                                      type SHARED
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ConversationUID">
+                <xs:annotation>
+                    <xs:documentation>This must be unique ID across a chain of messages and should be carried by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="CurrentMessageDateTime" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation> Time according to the client, In cases where there is 
+                                                                        an external client.           
+                                      </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EnvironmentID" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>This is useful for both a localized and shared service with multiple dev and QA environment dependencies. The ID would help to select the appropriate environment dependent resources to be used in the service.
+Format : BU_Env.Name
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="12"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="HostName">
+                <xs:annotation>
+                    <xs:documentation>Host name. This can mean a machine ID for the 
+                                        client, host name of the application server for the backend or request 
+                                         processing system.    
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="JHHeader">
+                <xs:annotation>
+                    <xs:documentation>message request header</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="hdr:Version">
+                            <xs:annotation>
+                                <xs:documentation>Used to indicate the XML document 
+                                                                      Version
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:ConversationUID">
+                            <xs:annotation>
+                                <xs:documentation>This must be unique ID across a chain of messages and should be carried by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:MessageUID">
+                            <xs:annotation>
+                                <xs:documentation>This must be unique for each request and should be created by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+Channel/Requestor supplies its own UID and ESB /service provider sets it in the response SOAP header.                           </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:RelatesTo">
+                            <xs:annotation>
+                                <xs:documentation>This element specifies the MessageUID to which it is related. In a chain of requests, this specifies the messageUID of previous requestor.
+It should be set to �NA� by the request initiator in the message chain. Together with MessageUID, it constitutes a unique combination across the chain of messages.
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:MessageType">
+                            <xs:annotation>
+                                <xs:documentation>This element is required to distinguish a record in the logs from a request or response type assuming for a request-reply pattern we log both incoming request and outgoing response message.
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:OriginalMessageDateTime">
+                            <xs:annotation>
+                                <xs:documentation> This date time is set by the request initiator and carried AS_IS by each message in the chain. format, 
+yyyy-MM-dd'T'HH:mm:ss.SSS.T 
+                          </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:CurrentMessageDateTime">
+                            <xs:annotation>
+                                <xs:documentation> Time according to the client, In cases where there is 
+                                                                        an external client.           
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:MessageSource">
+                            <xs:annotation>
+                                <xs:documentation>Describes the Source of a message.
+                                       </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:ServiceInfo">
+                            <xs:annotation>
+                                <xs:documentation>Describes the Service that is requested. This    
+                   element is set by the first server on the request processing path. It is optional for     
+                   client  issuing the original request.
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:Status" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Describes the status of a request. 
+                                       </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:EnvironmentID" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>This is useful for both a localized and shared service with multiple dev and QA environment dependencies. The ID would help to select the appropriate environment dependent resources to be used in the service.
+Format : BU_Env.Name
+                                      </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="hdr:RequestTimeOut" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Specifies a time-out period in seconds that the service consumer will wait for a response to the request.  After this time any response should be discarded.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="MessageSource" type="hdr:MessageSource">
+                <xs:annotation>
+                    <xs:documentation>Describes the Source of a message.
+                                       </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageType">
+                <xs:annotation>
+                    <xs:documentation>This element is required to distinguish a record in the logs from a request or response type assuming for a request-reply pattern we log both incoming request and outgoing response message.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="8"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="MessageUID">
+                <xs:annotation>
+                    <xs:documentation>This must be unique for each request and should be created by each requestor at each stage of message flow.
+UID is used to trace the request/response in the multiple channels-clients. It is strongly recommended that the client log this ID in their log. 
+Channel/Requestor supplies its own UID and ESB /service provider sets it in the response SOAP header.                           </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="OriginalMessageDateTime" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation> This date time is set by the request initiator and carried AS_IS by each message in the chain. format, 
+yyyy-MM-dd'T'HH:mm:ss.SSS.T 
+                          </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProcessID">
+                <xs:annotation>
+                    <xs:documentation>Process ID that initiated the request or response. 
+                           Useful in case of a Mainframe transaction or Batch process initiating the request.
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="6"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="RelatesTo">
+                <xs:annotation>
+                    <xs:documentation>This element specifies the MessageUID to which it is related. In a chain of requests, this specifies the messageUID of previous requestor.
+It should be set to �NA� by the request initiator in the message chain. Together with MessageUID, it constitutes a unique combination across the chain of messages.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="RequestTimeOut" type="xs:decimal">
+                <xs:annotation>
+                    <xs:documentation>Specifies a time-out period in seconds that the service consumer will wait for a response to the request.  After this time any response should be discarded.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ServiceInfo" type="hdr:ServiceInfo">
+                <xs:annotation>
+                    <xs:documentation>Describes the Service that is requested. This    
+                   element is set by the first server on the request processing path. It is optional for     
+                   client  issuing the original request.
+                                      </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ServiceName">
+                <xs:annotation>
+                    <xs:documentation>Used to identify the service that is being 
+                                                                       requested.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ServiceOperation">
+                <xs:annotation>
+                    <xs:documentation>Service Function.  Describes the type of service 
+                                                                       requested like Policy Inquiry.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ServiceVersion">
+                <xs:annotation>
+                    <xs:documentation>Used to identify the version of the service being 
+                                                                       invoked.
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Status" type="hdr:Status">
+                <xs:annotation>
+                    <xs:documentation>Describes the status of a request. 
+                                       </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="StatusCode">
+                <xs:annotation>
+                    <xs:documentation>Indicates the status of the  request.  
+                                       </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:enumeration value="0"/>
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="StatusDescription">
+                <xs:annotation>
+                    <xs:documentation>This element would carry meaningful description in case of partial and error status. The complete trace and info messages should be part of SOAPFAULT or application message payload with in SOAPBody.
+                                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="160"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="UserID">
+                <xs:annotation>
+                    <xs:documentation>Filled with the users AD userid. It may be of type 
+                                                                     shared.
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Version">
+                <xs:annotation>
+                    <xs:documentation>Used to indicate the XML document 
+                                                                      Version
+                                      </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:hdr="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msg="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" targetNamespace="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:simpleType name="ErrorCodeType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="ErrorDescriptionType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:complexType name="FaultType">
+                <xs:sequence>
+                    <xs:element name="ErrorCode" type="msg:ErrorCodeType"/>
+                    <xs:element name="ErrorDescription" type="msg:ErrorDescriptionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestParameter">
+                <xs:sequence>
+                    <xs:element name="ParmName" type="xs:string"/>
+                    <xs:element name="ParmValue" type="xs:string"/>
+                    <xs:element name="ParmDesc" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestParameters">
+                <xs:sequence>
+                    <xs:element name="RequestParameter" type="msg:RequestParameter"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Fault" type="msg:FaultType"/>
+        </xs:schema>
+        <xsd:schema xmlns:tns="http://www.esb.manulife.com/xsd/Annuity/jh/AWDIndexing" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msg="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" targetNamespace="http://www.esb.manulife.com/xsd/Annuity/jh/AWDIndexing" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xsd:import namespace="http://www.esb.manulife.com/xsd/common/jh/CommonMessage"/>
+            <xsd:annotation>
+                <xsd:documentation>This service is used by AWD10 to retrieve specific Vantage data that is needed for indexing work within AWD10.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType name="Address_Type">
+                <xsd:sequence>
+                    <xsd:element ref="tns:Line1"/>
+                    <xsd:element ref="tns:Line2" minOccurs="0"/>
+                    <xsd:element ref="tns:Line3" minOccurs="0"/>
+                    <xsd:element ref="tns:Line4" minOccurs="0"/>
+                    <xsd:element ref="tns:City"/>
+                    <xsd:element ref="tns:AddressStateCode"/>
+                    <xsd:element ref="tns:ZipPrefix" minOccurs="0"/>
+                    <xsd:element ref="tns:ZipSuffix" minOccurs="0"/>
+                    <xsd:element ref="tns:AddressCountryCode" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="AgentSearchResults_Type">
+                <xsd:sequence>
+                    <xsd:element ref="tns:FirstName"/>
+                    <xsd:element ref="tns:LastName"/>
+                    <xsd:element ref="tns:StateCode"/>
+                    <xsd:element ref="tns:GovtID"/>
+                    <xsd:element ref="tns:GovtIDTC"/>
+                    <xsd:element ref="tns:PhoneNumber"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Agent_Type">
+                <xsd:sequence>
+                    <xsd:element ref="tns:AgentId"/>
+                    <xsd:element ref="tns:BrokerDealerId" minOccurs="0"/>
+                    <xsd:element ref="tns:BrokerDealerName" minOccurs="0"/>
+                    <xsd:element ref="tns:CustomBrokerCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>Expected values are 0 or 1.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="tns:FirstName"/>
+                    <xsd:element ref="tns:LastName"/>
+                    <xsd:element ref="tns:GovtID"/>
+                    <xsd:element ref="tns:GovtIDTC"/>
+                    <xsd:element ref="tns:PhoneNumber"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Annuitant_Type">
+                <xsd:sequence>
+                    <xsd:element ref="tns:LastName" minOccurs="0"/>
+                    <xsd:element ref="tns:FirstName" minOccurs="0"/>
+                    <xsd:element ref="tns:GovtID" minOccurs="0"/>
+                    <xsd:element ref="tns:GovtIDTC" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="AnnuityOwner_Type">
+                <xsd:sequence>
+                    <xsd:element ref="tns:CompanyIndividualCode"/>
+                    <xsd:element ref="tns:FirmName" minOccurs="0"/>
+                    <xsd:element ref="tns:LastName" minOccurs="0"/>
+                    <xsd:element ref="tns:FirstName" minOccurs="0"/>
+                    <xsd:element ref="tns:GovtID" minOccurs="0"/>
+                    <xsd:element ref="tns:GovtIDTC" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="FixedVarCode_Type">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="F">
+                        <xsd:annotation>
+                            <xsd:documentation>Fixed</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="V">
+                        <xsd:annotation>
+                            <xsd:documentation>Variable</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="Indicator">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Y"/>
+                    <xsd:enumeration value="B"/>
+                    <xsd:enumeration value="C"/>
+                    <xsd:enumeration value="N"/>
+                    <xsd:enumeration value="A"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="StateCode_Type">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="Address" type="tns:Address_Type"/>
+            <xsd:element name="AddressCountryCode" type="xsd:string"/>
+            <xsd:element name="AddressStateCode" type="xsd:string"/>
+            <xsd:element name="Agent" type="tns:Agent_Type"/>
+            <xsd:element name="AgentAnnuityCompanyCode" type="xsd:string"/>
+            <xsd:element name="AgentId" type="xsd:string"/>
+            <xsd:element name="AgentSearchResults" type="tns:AgentSearchResults_Type"/>
+            <xsd:element name="AltPhoneNumber" type="xsd:string"/>
+            <xsd:element name="Annuitant" type="tns:Annuitant_Type"/>
+            <xsd:element name="AnnuityCompanyCode" type="xsd:string"/>
+            <xsd:element name="AnnuityLob" type="xsd:string"/>
+            <xsd:element name="AnnuityOwner" type="tns:AnnuityOwner_Type"/>
+            <xsd:element name="BirthDate" type="xsd:date"/>
+            <xsd:element name="BrokerCount" type="xsd:int"/>
+            <xsd:element name="BrokerDealerId" type="xsd:string"/>
+            <xsd:element name="BrokerDealerName" type="xsd:string"/>
+            <xsd:element name="City" type="xsd:string"/>
+            <xsd:element name="CompanyIndividualCode" type="xsd:string"/>
+            <xsd:element name="CustomBrokerCode" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Expected values are 0 or 1.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="FaxNumber" type="xsd:string"/>
+            <xsd:element name="FirmName" type="xsd:string"/>
+            <xsd:element name="FirstName" type="xsd:string"/>
+            <xsd:element name="FixedVarCode" type="tns:FixedVarCode_Type"/>
+            <xsd:element name="GenderDesc" type="xsd:string"/>
+            <xsd:element name="GenderTC">
+                <xsd:simpleType>
+                    <xsd:annotation>
+                        <xsd:documentation>2015-06-08 Type changed from nonNegativeInteger to int because Java 7 used by the IVR does not support unsigned numbers</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:restriction base="xsd:int">
+                        <xsd:enumeration value="0">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Description>
+                                        <p>Unknown</p>
+                                    </Description>
+                                </xsd:documentation>
+                                <xsd:appinfo>
+                                    <RevisionHistory NewRevision="No">
+                                        <LastRevision date="2000-10-02" ver="2.3" ref="00-613"/>
+                                    </RevisionHistory>
+                                    <SublistName>Common</SublistName>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Description>
+                                        <p>Male</p>
+                                    </Description>
+                                </xsd:documentation>
+                                <xsd:appinfo/>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="2">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Description>
+                                        <p>Female</p>
+                                    </Description>
+                                </xsd:documentation>
+                                <xsd:appinfo/>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="GetAgentData_fault">
+                <xsd:annotation>
+                    <xsd:documentation>Fault generated by GetAgentData operation</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Fault" type="msg:FaultType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetAgentData_request">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:AgentId"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetAgentData_response">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:AgentAnnuityCompanyCode"/>
+                        <xsd:element ref="tns:AgentId"/>
+                        <xsd:element ref="tns:MasterAgentId" minOccurs="0"/>
+                        <xsd:element ref="tns:MasterAnnuityCompanyCode" minOccurs="0"/>
+                        <xsd:element ref="tns:GovtID" minOccurs="0"/>
+                        <xsd:element ref="tns:GovtIDTC" minOccurs="0"/>
+                        <xsd:element ref="tns:Prefix" minOccurs="0"/>
+                        <xsd:element ref="tns:FirstName"/>
+                        <xsd:element ref="tns:LastName"/>
+                        <xsd:element ref="tns:Suffix" minOccurs="0"/>
+                        <xsd:element ref="tns:GenderDesc" minOccurs="0"/>
+                        <xsd:element ref="tns:GenderTC" minOccurs="0"/>
+                        <xsd:element ref="tns:BirthDate" minOccurs="0"/>
+                        <xsd:element ref="tns:PhoneNumber" minOccurs="0"/>
+                        <xsd:element ref="tns:AltPhoneNumber" minOccurs="0"/>
+                        <xsd:element ref="tns:FaxNumber" minOccurs="0"/>
+                        <xsd:element ref="tns:Address" minOccurs="0"/>
+                        <xsd:element ref="tns:FirmName" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetPolicyData_fault">
+                <xsd:annotation>
+                    <xsd:documentation>Fault generated by GetPolicyData operation</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Fault" type="msg:FaultType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetPolicyData_request">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:PolNumber"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetPolicyData_response">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:AnnuityCompanyCode"/>
+                        <xsd:element ref="tns:AnnuityLob"/>
+                        <xsd:element ref="tns:FixedVarCode"/>
+                        <xsd:element ref="tns:ReinsTrtyInd"/>
+                        <xsd:element ref="tns:AnnuityOwner"/>
+                        <xsd:element ref="tns:Annuitant"/>
+                        <xsd:element ref="tns:BrokerCount"/>
+                        <xsd:element ref="tns:Agent"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GovtID" type="xsd:string"/>
+            <xsd:element name="GovtIDTC">
+                <xsd:simpleType>
+                    <xsd:annotation>
+                        <xsd:documentation>2015-06-08 Type changed from nonNegativeInteger to int because Java 7 used by the IVR does not support unsigned numbers</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:restriction base="xsd:int">
+                        <xsd:enumeration value="0">
+                            <xsd:annotation>
+                                <xsd:documentation>Unknown</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Description>
+                                        <p>Social Security Number US</p>
+                                    </Description>
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="2">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Definition>
+                                        <p>Taxpayer Identification Number (TIN) is a generic term that can be used to describe any form of tax id (e. g. Social Security Number for people, US Employer Identification Number for organizations).</p>
+                                    </Definition>
+                                    <Description>
+                                        <p>Taxpayer Identification Number</p>
+                                    </Description>
+                                    <Usage>
+                                        <p>When used in the US for a Party representing a person, this is generally understood to be a Social Security Number. See also tc=1 for Social Security Number US.</p>
+                                        <p>When used in the US for a Party representing an organization, this is generally understood to be a US Employer Identification Number. See also tc=8 for US Employer Identification Number.</p>
+                                    </Usage>
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="3">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Description>
+                                        <p>Social Insurance Number in Canada</p>
+                                    </Description>
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="8">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <Description>
+                                        <p>US Employer Identification Number</p>
+                                    </Description>
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                        <xsd:enumeration value="2147483647">
+                            <xsd:annotation>
+                                <xsd:documentation>Other</xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="LastName" type="xsd:string"/>
+            <xsd:element name="Line1" type="xsd:string"/>
+            <xsd:element name="Line2" type="xsd:string"/>
+            <xsd:element name="Line3" type="xsd:string"/>
+            <xsd:element name="Line4" type="xsd:string"/>
+            <xsd:element name="MasterAgentId" type="xsd:string"/>
+            <xsd:element name="MasterAnnuityCompanyCode" type="xsd:string"/>
+            <xsd:element name="PhoneNumber" type="xsd:string"/>
+            <xsd:element name="PolNumber" type="xsd:string"/>
+            <xsd:element name="Prefix" type="xsd:string"/>
+            <xsd:element name="ReinsTrtyInd" type="tns:Indicator"/>
+            <xsd:element name="SearchAgentName_fault">
+                <xsd:annotation>
+                    <xsd:documentation>Fault generated by SearchAgentName operation</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Fault" type="msg:FaultType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SearchAgentName_request">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:LastName"/>
+                        <xsd:element ref="tns:FirstName" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SearchAgentName_response">
+                <xsd:annotation>
+                    <xsd:documentation>Response to SearchAgentName_request</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:AgentSearchResults" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="StateCode" type="tns:StateCode_Type"/>
+            <xsd:element name="Suffix" type="xsd:string"/>
+            <xsd:element name="ZipPrefix" type="xsd:string"/>
+            <xsd:element name="ZipSuffix" type="xsd:string"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetPolicyDataRequest">
+        <wsdl:part name="GetPolicyDataRequest" element="ns0:GetPolicyData_request"/>
+    </wsdl:message>
+    <wsdl:message name="GetPolicyDataResponse">
+        <wsdl:part name="GetPolicyDataResponse" element="ns0:GetPolicyData_response"/>
+    </wsdl:message>
+    <wsdl:message name="GetPolicyDataFault">
+        <wsdl:part name="GetPolicyDataFault" element="ns0:GetPolicyData_fault"/>
+    </wsdl:message>
+    <wsdl:message name="GetAgentDataRequest">
+        <wsdl:part name="GetAgentDataRequest" element="ns0:GetAgentData_request"/>
+    </wsdl:message>
+    <wsdl:message name="GetAgentDataResponse">
+        <wsdl:part name="GetAgentDataResponse" element="ns0:GetAgentData_response"/>
+    </wsdl:message>
+    <wsdl:message name="GetAgentDataFault">
+        <wsdl:part name="GetAgentDataFault" element="ns0:GetAgentData_fault"/>
+    </wsdl:message>
+    <wsdl:message name="SearchAgentNameRequest">
+        <wsdl:part name="SearchAgentNameRequest" element="ns0:SearchAgentName_request"/>
+    </wsdl:message>
+    <wsdl:message name="SearchAgentNameResponse">
+        <wsdl:part name="SearchAgentNameResponse" element="ns0:SearchAgentName_response"/>
+    </wsdl:message>
+    <wsdl:message name="SearchAgentNameFault">
+        <wsdl:part name="SearchAgentNameFault" element="ns0:SearchAgentName_fault"/>
+    </wsdl:message>
+    <wsdl:message name="JHHeader">
+        <wsdl:part name="JHHeader" element="ns1:JHHeader"/>
+    </wsdl:message>
+    <wsdl:portType name="PolicyIndexingData">
+        <wsdl:operation name="GetPolicyData">
+            <wsdl:input message="tns:GetPolicyDataRequest"/>
+            <wsdl:output message="tns:GetPolicyDataResponse"/>
+            <wsdl:fault name="GetPolicyDataFault" message="tns:GetPolicyDataFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAgentData">
+            <wsdl:input message="tns:GetAgentDataRequest"/>
+            <wsdl:output message="tns:GetAgentDataResponse"/>
+            <wsdl:fault name="GetAgentDataFault" message="tns:GetAgentDataFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchAgentName">
+            <wsdl:input message="tns:SearchAgentNameRequest"/>
+            <wsdl:output message="tns:SearchAgentNameResponse"/>
+            <wsdl:fault name="SearchAgentNameFault" message="tns:SearchAgentNameFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PolicyIndexingData_SOAP" type="tns:PolicyIndexingData">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetPolicyData">
+            <wsdl:documentation/>
+            <soap:operation style="document" soapAction="GetPolicyData"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="GetPolicyDataRequest"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="GetPolicyDataResponse"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:output>
+            <wsdl:fault name="GetPolicyDataFault">
+                <soap:fault use="literal" name="GetPolicyDataFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAgentData">
+            <wsdl:documentation/>
+            <soap:operation style="document" soapAction="GetAgentData"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="GetAgentDataRequest"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="GetAgentDataResponse"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:output>
+            <wsdl:fault name="GetAgentDataFault">
+                <soap:fault use="literal" name="GetAgentDataFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SearchAgentName">
+            <wsdl:documentation/>
+            <soap:operation style="document" soapAction="SearchAgentName"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="SearchAgentNameRequest"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="SearchAgentNameResponse"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:output>
+            <wsdl:fault name="SearchAgentNameFault">
+                <soap:fault use="literal" name="SearchAgentNameFault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PolicyIndexingData">
+        <wsdl:port name="PolicyIndexingData_SOAP" binding="tns:PolicyIndexingData_SOAP">
+            <soap:address location="https://0.0.0.0:7039/Annuity/PolicyIndexingData_1.0"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

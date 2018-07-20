@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" xmlns:ns1="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:tns="http://www.esb.manulife.com/wsdl/wealth/annuity/AnnuityContract_1.0/AnnuityContract_1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.esb.manulife.com/xsd/annuity/jh/AnnuityContract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="AnnuityContract_1.0" targetNamespace="http://www.esb.manulife.com/wsdl/wealth/annuity/AnnuityContract_1.0/AnnuityContract_1.0">
+    <wsdl:types>
+        <xs:schema xmlns:hdr="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.esb.manulife.com/xsd/common/jh/header" version="1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:complexType name="MessageSource">
+                <xs:sequence>
+                    <xs:element ref="hdr:ApplicationName"/>
+                    <xs:element ref="hdr:HostName"/>
+                    <xs:element ref="hdr:ApplicationUserID" minOccurs="0"/>
+                    <xs:element ref="hdr:UserID" minOccurs="0"/>
+                    <xs:element ref="hdr:ProcessID" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ServiceInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:ServiceName"/>
+                    <xs:element ref="hdr:ServiceVersion"/>
+                    <xs:element ref="hdr:ServiceOperation"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Status">
+                <xs:sequence>
+                    <xs:element ref="hdr:StatusCode"/>
+                    <xs:element ref="hdr:StatusDescription"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ApplicationName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ApplicationUserID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ConversationUID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="CurrentMessageDateTime" type="xs:dateTime"/>
+            <xs:element name="EnvironmentID" nillable="true">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="12"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="HostName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="JHHeader">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="hdr:Version"/>
+                        <xs:element ref="hdr:ConversationUID"/>
+                        <xs:element ref="hdr:MessageUID"/>
+                        <xs:element ref="hdr:RelatesTo"/>
+                        <xs:element ref="hdr:MessageType"/>
+                        <xs:element ref="hdr:OriginalMessageDateTime"/>
+                        <xs:element ref="hdr:CurrentMessageDateTime"/>
+                        <xs:element ref="hdr:MessageSource"/>
+                        <xs:element ref="hdr:ServiceInfo"/>
+                        <xs:element ref="hdr:Status" minOccurs="0"/>
+                        <xs:element ref="hdr:EnvironmentID" minOccurs="0"/>
+                        <xs:element ref="hdr:RequestTimeOut" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="MessageSource" type="hdr:MessageSource"/>
+            <xs:element name="MessageType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="8"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="MessageUID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="OriginalMessageDateTime" type="xs:dateTime"/>
+            <xs:element name="ProcessID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="6"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="RelatesTo">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="RequestTimeOut" type="xs:decimal"/>
+            <xs:element name="ServiceInfo" type="hdr:ServiceInfo"/>
+            <xs:element name="ServiceName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ServiceOperation">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ServiceVersion">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Status" type="hdr:Status"/>
+            <xs:element name="StatusCode">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:enumeration value="0"/>
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="StatusDescription">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="160"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="UserID">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Version">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:tns="http://www.esb.manulife.com/xsd/annuity/jh/AnnuityContract" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msg="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" targetNamespace="http://www.esb.manulife.com/xsd/annuity/jh/AnnuityContract" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:import namespace="http://www.esb.manulife.com/xsd/common/jh/CommonMessage"/>
+            <xs:element name="AnnuityContractId" type="xs:string"/>
+            <xs:element name="ContractBenefits">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ContractValueAsOfDate" type="xs:date"/>
+                        <xs:element name="ContractAmt" type="xs:decimal"/>
+                        <xs:element name="GuarMinDeathBenefitAmt" type="xs:decimal"/>
+                        <xs:element name="DeathBenefitAmt" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetAnnuityContract_fault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Fault" type="msg:FaultType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetAnnuityContract_request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="tns:AnnuityContractId"/>
+                        <xs:element name="ContractBenefitsInd" type="xs:boolean" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetAnnuityContract_response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="tns:AnnuityContractId"/>
+                        <xs:element ref="tns:ContractBenefits" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:hdr="http://www.esb.manulife.com/xsd/common/jh/header" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msg="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" targetNamespace="http://www.esb.manulife.com/xsd/common/jh/CommonMessage" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:import namespace="http://www.esb.manulife.com/xsd/common/jh/header"/>
+            <xs:annotation>
+                <xs:documentation>Common types for use in SOA messages</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType name="ErrorCodeType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="ErrorDescriptionType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:complexType name="FaultType">
+                <xs:sequence>
+                    <xs:element name="ErrorCode" type="msg:ErrorCodeType"/>
+                    <xs:element name="ErrorDescription" type="msg:ErrorDescriptionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestCommonInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:JHHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestParameter">
+                <xs:sequence>
+                    <xs:element name="ParmName" type="xs:string"/>
+                    <xs:element name="ParmValue" type="xs:string"/>
+                    <xs:element name="ParmDesc" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RequestParameters">
+                <xs:sequence>
+                    <xs:element name="RequestParameter" type="msg:RequestParameter"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ResponseCommonInfo">
+                <xs:sequence>
+                    <xs:element ref="hdr:JHHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Fault" type="msg:FaultType"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="GetAnnuityContract_request">
+        <wsdl:part name="getAnnuityContractIn" element="ns0:GetAnnuityContract_request"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnnuityContract_response">
+        <wsdl:part name="getAnnuityContractOut" element="ns0:GetAnnuityContract_response"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnnuityContract_fault">
+        <wsdl:part name="FaultParameters" element="ns0:GetAnnuityContract_fault"/>
+    </wsdl:message>
+    <wsdl:message name="JHHeader">
+        <wsdl:part name="JHHeader" element="ns1:JHHeader"/>
+    </wsdl:message>
+    <wsdl:portType name="AnnuityContract_1.0">
+        <wsdl:operation name="GetAnnuityContract">
+            <wsdl:input message="tns:GetAnnuityContract_request"/>
+            <wsdl:output message="tns:GetAnnuityContract_response"/>
+            <wsdl:fault name="GetAnnuityContractfault" message="tns:GetAnnuityContract_fault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GetAnnuityContractSoapBinding" type="tns:AnnuityContract_1.0">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetAnnuityContract">
+            <wsdl:documentation/>
+            <soap:operation style="document" soapAction="GetAnnuityContract"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="getAnnuityContractIn"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="getAnnuityContractOut"/>
+                <soap:header use="literal" message="tns:JHHeader" part="JHHeader"/>
+            </wsdl:output>
+            <wsdl:fault name="GetAnnuityContractfault">
+                <soap:fault use="literal" name="GetAnnuityContractfault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AnnuityContract_1.0">
+        <wsdl:port name="GetAnnuityContractSoapBinding" binding="tns:GetAnnuityContractSoapBinding">
+            <soap:address location="https://0.0.0.0:7077/wealth/annuity/AnnuityContract"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
